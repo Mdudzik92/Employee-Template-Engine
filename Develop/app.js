@@ -9,6 +9,132 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const { listenerCount } = require("process");
+let employeeList = []
+
+function createManager(){
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "managerName",
+            message: "What's the manager's name?"
+        },
+        {
+            type: "input",
+            name: "managerId",
+            message: "What's the manager's ID?"
+        },
+        {
+            type: "input",
+            name: "managerEmail",
+            message: "What's the manager's email address??"
+        },
+        {
+            type: "input",
+            name: "managerOffice",
+            message: "What's the manager's office number?"
+        }
+    ])
+    .then(function(answers) {
+        console.log(answers)
+        var newManager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOffice)
+        employeeList.push(newManager)
+        createTeamMembers()
+    })
+}
+
+function createTeamMembers(){
+    inquirer.prompt({
+        type: "list",
+        name: "memberType",
+        message: "Do you want an engineer or an intern?",
+        choices: ["engineer", "intern", "exit"]
+    })
+    .then(function(answers) {
+        console.log(answers.memberType)
+        if(answers.memberType === "engineer"){
+            createEngineer()
+        }
+        if(answers.memberType === "intern"){
+            createIntern()
+        }
+        if(answers.memberType === "exit"){
+            buildTeam()
+        }
+    })
+}
+
+function buildTeam() {
+    fs.writeFileSync("index.html", render(employeeList), "utf-8")
+}
+
+function createEngineer() {
+    return inquirer.prompt(
+        [
+            {
+                type: "input",
+                name: "engineerName",
+                message: "What's the engineer's name?"
+            },
+            {
+                type: "input",
+                name: "engineerId",
+                message: "What's the engineer's ID?"
+            },
+            {
+                type: "input",
+                name: "engineerEmail",
+                message: "What's the engineer's email address??"
+            },
+            {
+                type: "input",
+                name: "engineerGithub",
+                message: "What's the engineer's github?"
+            }
+        ]
+    )
+    .then(function(answers) {
+        console.log(answers)
+        var newEngineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub)
+        employeeList.push(newEngineer)
+        createTeamMembers()
+    })
+}
+
+function createIntern() {
+    return inquirer.prompt(
+        [
+            {
+                type: "input",
+                name: "internName",
+                message: "What's the intern's name?"
+            },
+            {
+                type: "input",
+                name: "internId",
+                message: "What's the intern's ID?"
+            },
+            {
+                type: "input",
+                name: "internEmail",
+                message: "What's the intern's email address??"
+            },
+            {
+                type: "input",
+                name: "internSchool",
+                message: "What's the intern's school?"
+            }
+        ]
+    )
+    .then(function(answers) {
+        console.log(answers)
+        var newIntern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool)
+        employeeList.push(newIntern)
+        createTeamMembers()
+    })
+}
+
+createManager()
 
 // What's the manager's name?
 // What's the manager's ID?
