@@ -1,4 +1,4 @@
-* Good README Generator
+* Employee Template Engine
 
 <!-- Live link to deployed app -->
 Repository: https://github.com/Mdudzik92/homework10
@@ -11,8 +11,8 @@ Node.js, Javascript, JSON
 This is an app which builds a software engineering team generator command line application. The working tests provide the user with a series of prompts to fill out the information regarding the members of their team, and prints them on a seperate html page that compiles their team. 
 
 <!-- Screenshot -->
-<img src="../Assets/buildteamcode.jpg">
-<img src="../Assets/htmlexample.jpg">
+<img src="./Assets/buildteamcode.jpg">
+<img src="./Assets/htmlexample.jpg">
 
 <!-- License -->
 MIT
